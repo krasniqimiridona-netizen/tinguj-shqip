@@ -58,7 +58,7 @@ def build_background():
     top = np.array([8, 10, 28], float)
     mid = np.array([38, 28, 68], float)
     sky = np.where(y < 0.6, top + (mid - top) * (y / 0.6), mid)
-    img = np.repeat(sky, W, axis=1).reshape(H, W, 3).copy()
+    img = np.broadcast_to(sky[:, None, :], (H, W, 3)).copy()
 
     # stars
     for _ in range(140):
@@ -352,7 +352,7 @@ def main():
 
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24",
            "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-", "-i", WAV,
-           "-c:v", "libx264", "-preset", "medium", "-crf", "19", "-pix_fmt", "yuv420p",
+           "-c:v", "libx264", "-preset", "medium", "-crf", "22", "-pix_fmt", "yuv420p",
            "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", OUT]
     ff = subprocess.Popen(cmd, stdin=subprocess.PIPE)
 
@@ -414,8 +414,9 @@ def main():
                 y0 = int(cy + dy - hi.height / 2)
                 sub = frame[y0:y0 + hi.height, x0:x0 + hi.width]
                 frame[y0:y0 + hi.height, x0:x0 + hi.width] = sub * (1 - ha) + heart_col * ha
-                # glow
-                frame[y0:y0 + hi.height, x0:x0 + hi.width] += heart_col * 0.15 * a * pil_heart_alpha
+                # soft glow around the heart shape
+                glow = np.asarray(hi.filter(ImageFilter.GaussianBlur(14)), np.float32)[..., None] / 255.0
+                frame[y0:y0 + hi.height, x0:x0 + hi.width] += heart_col * 0.35 * glow * a * pil_heart_alpha
 
         frame *= vig
 
