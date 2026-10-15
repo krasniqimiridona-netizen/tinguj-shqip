@@ -13,7 +13,7 @@ Udhëzues praktik (31 faqe, A5, PDF) me 12 mënyra reale për të fituar para on
 
 ## Ta ndryshosh dhe ta rikrijosh PDF-në
 
-Ndrysho `fito-online.html` (p.sh. emrin "Tinguj Shqip" me emrin tënd), pastaj:
+Ndrysho `fito-online.html` (p.sh. emrin e autorit "Shqiponja Digital"), pastaj:
 
 ```bash
 chromium --headless=new --no-pdf-header-footer --print-to-pdf=ebook/Fito_Online.pdf ebook/fito-online.html
