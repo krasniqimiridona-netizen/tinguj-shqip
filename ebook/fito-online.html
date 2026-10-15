@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="sq">
+<head>
+<meta charset="utf-8">
+<title>Fito Online: Udhëzuesi praktik për të fituar para nga interneti</title>
+<style>
+  @page {
+    size: A5;
+    margin: 18mm 15mm 18mm 15mm;
+    @bottom-center { content: counter(page); font-family: Inter, sans-serif; font-size: 8pt; color: #8a8f98; }
+  }
+  @page cover { margin: 0; @bottom-center { content: none; } }
+  @page chapter { @bottom-center { content: none; } }
+
+  :root {
+    --ink: #1b1d23;
+    --muted: #5b616e;
+    --accent: #e0245e;
+    --accent-2: #7c3aed;
+    --soft: #fdf2f6;
+    --soft-2: #f4f0ff;
+    --line: #e6e7eb;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0;
+    font-family: Inter, "DejaVu Sans", sans-serif;
+    font-size: 9.6pt;
+    line-height: 1.55;
+    color: var(--ink);
+    hyphens: auto;
+  }
+  h1, h2, h3 { font-family: "Inter Display", Inter, sans-serif; line-height: 1.2; margin: 0; }
+  h2 { font-size: 15pt; margin: 0 0 3mm; letter-spacing: -0.01em; }
+  h3 { font-size: 11pt; margin: 5mm 0 1.5mm; break-after: avoid; }
+  p { margin: 0 0 2.6mm; }
+  ul, ol { margin: 0 0 3mm; padding-left: 5mm; }
+  li { margin-bottom: 1.2mm; }
+  strong { font-weight: 650; }
+  a { color: var(--accent-2); text-decoration: none; }
+
+  /* ---------- cover ---------- */
+  .cover {
+    page: cover;
+    height: 210mm; width: 148mm;
+    position: relative; overflow: hidden;
+    background: radial-gradient(120% 80% at 80% 0%, #7c3aed 0%, rgba(124,58,237,0) 60%),
+                radial-gradient(100% 70% at 0% 100%, #e0245e 0%, rgba(224,36,94,0) 60%),
+                #14101f;
+    color: #fff;
+    padding: 20mm 14mm;
+    break-after: page;
+  }
+  .cover .tag { display: inline-block; font-size: 8pt; letter-spacing: .18em; text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,.4); border-radius: 20px; padding: 1.2mm 3.5mm; }
+  .cover h1 { font-size: 40pt; font-weight: 800; letter-spacing: -0.03em; margin: 22mm 0 4mm; line-height: 1; }
+  .cover h1 span { color: #ff7aa8; }
+  .cover .sub { font-size: 12.5pt; line-height: 1.4; color: rgba(255,255,255,.88); max-width: 105mm; }
+  .cover .chips { margin-top: 12mm; display: flex; flex-wrap: wrap; gap: 2mm; }
+  .cover .chips span { background: rgba(255,255,255,.12); border-radius: 3mm; padding: 1.5mm 3mm; font-size: 8.5pt; }
+  .cover .author { position: absolute; bottom: 16mm; left: 14mm; right: 14mm; font-size: 9pt;
+    color: rgba(255,255,255,.75); border-top: 1px solid rgba(255,255,255,.25); padding-top: 4mm;
+    display: flex; justify-content: space-between; }
+  .cover .coin { position: absolute; right: -18mm; top: 92mm; width: 70mm; height: 70mm; border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.18); }
+  .cover .coin::after { content: "€"; position: absolute; inset: 0; display: grid; place-items: center;
+    font-size: 54pt; font-weight: 800; color: rgba(255,255,255,.14); }
+
+  /* ---------- chapter openers ---------- */
+  .chapter {
+    page: chapter;
+    break-before: page;
+    padding-top: 32mm;
+  }
+  .chapter .num { font-family: "Inter Display", Inter; font-size: 54pt; font-weight: 800; color: var(--accent);
+    line-height: 1; letter-spacing: -0.04em; }
+  .chapter h2 { font-size: 22pt; margin-top: 3mm; }
+  .chapter .lead { font-size: 11pt; color: var(--muted); margin-top: 4mm; max-width: 100mm; }
+  .chapter .bar { width: 18mm; height: 1.4mm; background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    border-radius: 1mm; margin-top: 8mm; }
+  section { break-before: page; }
+  section.flow { break-before: auto; }
+
+  /* ---------- blocks ---------- */
+  .box { border-radius: 3mm; padding: 3.5mm 4mm; margin: 3mm 0 4mm; break-inside: avoid; }
+  .box.tip { background: var(--soft-2); border-left: 1.2mm solid var(--accent-2); }
+  .box.warn { background: #fff6e8; border-left: 1.2mm solid #f59e0b; }
+  .box.key { background: var(--soft); border-left: 1.2mm solid var(--accent); }
+  .box .label { font-size: 7.5pt; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 1mm; display: block; }
+  .box.tip .label { color: var(--accent-2); }
+  .box.warn .label { color: #b45309; }
+  .box.key .label { color: var(--accent); }
+  .box p:last-child, .box ul:last-child { margin-bottom: 0; }
+
+  .method { border: 1px solid var(--line); border-radius: 3mm; padding: 4mm; margin: 0 0 4mm; break-inside: avoid; }
+  .method .head { display: flex; align-items: baseline; gap: 3mm; margin-bottom: 2mm; }
+  .method .n { font-family: "Inter Display", Inter; font-weight: 800; font-size: 16pt; color: var(--accent); }
+  .method h3 { margin: 0; font-size: 12pt; }
+  .meta { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5mm 4mm; font-size: 8.4pt; background: #f7f7f9;
+    border-radius: 2mm; padding: 2.5mm 3mm; margin: 2mm 0 2.5mm; }
+  .meta b { display: block; font-size: 7pt; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .method ol { margin-bottom: 0; }
+  .method { padding: 3mm 3.5mm; margin-bottom: 3mm; }
+  .method p, .method li { font-size: 8.6pt; line-height: 1.42; }
+  .method li { margin-bottom: .6mm; }
+  .method p { margin-bottom: 1.5mm; }
+  .method .head { margin-bottom: 1mm; }
+  .method h3 { font-size: 11pt; }
+  .method .meta { font-size: 7.6pt; line-height: 1.35; padding: 2mm 2.5mm; margin: 1.5mm 0 2mm; gap: 1mm 4mm; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 8.4pt; margin: 2mm 0 4mm; break-inside: avoid; }
+  th { text-align: left; background: #1b1d23; color: #fff; font-weight: 600; padding: 2mm 2.5mm; }
+  th:first-child { border-top-left-radius: 2mm; } th:last-child { border-top-right-radius: 2mm; }
+  td { padding: 2mm 2.5mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:nth-child(even) td { background: #fafafb; }
+
+  .template { font-family: "DejaVu Sans Mono", monospace; font-size: 7.8pt; line-height: 1.5; background: #14101f; color: #eee;
+    border-radius: 3mm; padding: 4mm; white-space: pre-wrap; margin: 2mm 0 4mm; break-inside: avoid; }
+  .template .hl { color: #ff7aa8; }
+
+  .toc { list-style: none; padding: 0; margin-top: 6mm; }
+  .toc li { display: flex; gap: 4mm; padding: 2.6mm 0; border-bottom: 1px solid var(--line); margin: 0; font-size: 10pt; }
+  .toc .n { font-weight: 800; color: var(--accent); width: 8mm; }
+  .toc .t { flex: 1; }
+  .toc .d { color: var(--muted); font-size: 8.5pt; }
+
+  .check { list-style: none; padding: 0; }
+  .check li { padding-left: 7mm; position: relative; }
+  .check li::before { content: ""; position: absolute; left: 0; top: .9mm; width: 3.4mm; height: 3.4mm;
+    border: 1.3px solid var(--accent); border-radius: 1mm; }
+
+  .week { border-radius: 3mm; padding: 3.5mm 4mm; margin-bottom: 3mm; break-inside: avoid; background: #f7f7f9; }
+  .week h3 { margin: 0 0 1.5mm; font-size: 10.5pt; color: var(--accent-2); }
+  .week ul { margin: 0; }
+
+  .end { text-align: center; padding-top: 40mm; }
+  .end h2 { font-size: 20pt; }
+  .end p { color: var(--muted); max-width: 100mm; margin: 4mm auto; }
+  .small { font-size: 7.8pt; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <span class="tag">Udhëzues praktik · 2026</span>
+  <h1>Fito<br><span>Online</span></h1>
+  <p class="sub">12 mënyra reale për të fituar para nga interneti, nga Shqipëria, Kosova dhe kudo ku flitet shqip.</p>
+  <div class="chips">
+    <span>Pa investim të madh</span><span>Hap pas hapi</span><span>Plan 30-ditor</span><span>Shabllone gati</span>
+  </div>
+  <div class="coin"></div>
+  <div class="author"><span>Tinguj Shqip</span><span>E-book</span></div>
+</div>
+
+<!-- ============ TOC ============ -->
+<section class="flow" style="break-before: auto">
+  <h2>Përmbajtja</h2>
+  <ul class="toc">
+    <li><span class="n">00</span><span class="t">Para se të fillosh<br><span class="d">Realiteti, rregullat dhe mendësia e duhur</span></span></li>
+    <li><span class="n">01</span><span class="t">Përgatitja<br><span class="d">Mjetet, pagesat dhe taksat</span></span></li>
+    <li><span class="n">02</span><span class="t">12 mënyra për të fituar online<br><span class="d">Çfarë janë, ku i gjen, si fillon</span></span></li>
+    <li><span class="n">03</span><span class="t">Klienti i parë<br><span class="d">Portofoli, mesazhet dhe çmimet</span></span></li>
+    <li><span class="n">04</span><span class="t">Rritu në Instagram dhe TikTok<br><span class="d">Reels, audienca dhe fitimi nga rrjetet</span></span></li>
+    <li><span class="n">05</span><span class="t">Krijo dhe shit produktin tënd digjital<br><span class="d">Nga ideja te shitja e parë</span></span></li>
+    <li><span class="n">06</span><span class="t">Mashtrimet që duhet t'i shmangësh</span></li>
+    <li><span class="n">07</span><span class="t">Plani 30-ditor<br><span class="d">Çfarë bën çdo javë</span></span></li>
+  </ul>
+  <p class="small" style="margin-top:8mm">Ky libër jep informacion edukativ. Platformat ndryshojnë kushtet, tarifat dhe vendet ku punojnë, ndaj kontrolloji gjithmonë në faqen e tyre zyrtare para se të nisësh. Shumat e përmendura janë shembuj orientues, jo premtime fitimi.</p>
+</section>
+
+<!-- ============ 00 ============ -->
+<div class="chapter">
+  <div class="num">00</div>
+  <h2>Para se të fillosh</h2>
+  <p class="lead">Interneti nuk është makinë parash. Është treg. Kush ofron vlerë, fiton.</p>
+  <div class="bar"></div>
+</div>
+
+<section>
+  <h3 style="margin-top:0">E vërteta që askush nuk ta thotë</h3>
+  <p>Në rrjete do të shohësh njerëz që "fitojnë 10.000€ në muaj nga telefoni". Shumica e tyre fitojnë duke të shitur ëndrrën, jo duke bërë atë që reklamojnë. Mënyrat reale për të fituar online janë më pak magjike, por funksionojnë:</p>
+  <ul>
+    <li><strong>Shet kohën tënde</strong>: freelancing, mësimdhënie, menaxhim rrjetesh.</li>
+    <li><strong>Shet një produkt</strong>: e-book, shabllone, kurse, produkte fizike.</li>
+    <li><strong>Shet vëmendjen</strong>: krijim përmbajtjeje, bashkëpunime me marka, afiliim.</li>
+  </ul>
+  <p>Fillimi më i shpejtë është gati gjithmonë i pari: shet një aftësi që e ke tani. Produktet dhe audienca vijnë më vonë dhe rriten me kohën.</p>
+
+  <div class="box key">
+    <span class="label">3 rregullat e arta</span>
+    <ul>
+      <li><strong>Mos paguaj kurrë për të marrë punë.</strong> Punëdhënësi të paguan ty, jo e kundërta.</li>
+      <li><strong>Zgjidh një rrugë dhe qëndro 90 ditë.</strong> Kush ndërron metodë çdo javë nuk arrin askund.</li>
+      <li><strong>Mat çdo gjë.</strong> Sa orë punove, sa fitove, nga erdhi klienti. Numrat të tregojnë ku të fokusohesh.</li>
+    </ul>
+  </div>
+
+  <h3>Përparësia jote si shqiptar</h3>
+  <p>Ke diçka që shumica e botës nuk e ka: <strong>gjuhën shqipe dhe njohjen e tregut shqiptar</strong>. Ka mbi 10 milionë shqipfolës në Shqipëri, Kosovë, Maqedoninë e Veriut, Mal të Zi dhe në diasporë (Itali, Gjermani, Zvicër, SHBA, Angli). Bizneset, familjet dhe fëmijët e diasporës kanë nevojë për përkthime, mësim të shqipes, marketing në shqip dhe produkte në gjuhën e tyre. Kjo është një nishë ku konkurrenca globale është e vogël.</p>
+  <p>Shumë nga ju flasin edhe anglisht, italisht ose gjermanisht. Çdo gjuhë shtesë është një treg i ri.</p>
+</section>
+
+<!-- ============ 01 ============ -->
+<div class="chapter">
+  <div class="num">01</div>
+  <h2>Përgatitja</h2>
+  <p class="lead">Çfarë të duhet para ditës së parë: pak mjete, një mënyrë për të marrë pagesa dhe rregull me taksat.</p>
+  <div class="bar"></div>
+</div>
+
+<section>
+  <h3 style="margin-top:0">Mjetet bazë</h3>
+  <table>
+    <tr><th>Mjeti</th><th>Për çfarë</th><th>Kosto</th></tr>
+    <tr><td>Telefon i mirë ose laptop</td><td>Pothuajse çdo metodë. Laptopi duhet për freelancing serioz.</td><td>Atë që ke</td></tr>
+    <tr><td>Email profesional</td><td>emri.mbiemri@gmail.com, jo "princesha_99"</td><td>Falas</td></tr>
+    <tr><td>Canva</td><td>Dizajn, postime, CV, e-book</td><td>Falas / Pro me pagesë</td></tr>
+    <tr><td>CapCut</td><td>Montim videosh për Reels/TikTok</td><td>Falas / Pro me pagesë</td></tr>
+    <tr><td>Google Drive / Docs</td><td>Dokumente, portofol, faturat</td><td>Falas</td></tr>
+    <tr><td>Asistent AI</td><td>Ide, tekste, përkthime fillestare, plane</td><td>Falas / me pagesë</td></tr>
+  </table>
+
+  <h3>Si të marrësh pagesat</h3>
+  <p>Kjo është pjesa ku shumë shqiptarë ngecin, sepse jo çdo shërbim pagese punon njësoj në Shqipëri dhe Kosovë. Opsionet më të përdorura:</p>
+  <ul>
+    <li><strong>Payoneer</strong>: përdoret gjerësisht nga freelancerët në rajon. Lidhet me Upwork, Fiverr dhe shumë platforma të tjera, dhe paratë i tërheq në llogarinë bankare.</li>
+    <li><strong>Llogari bankare në euro/dollarë</strong>: shumica e platformave paguajnë me transfertë direkte (SWIFT/SEPA).</li>
+    <li><strong>Wise</strong>: i mirë për transferta ndërkombëtare me tarifa të ulëta. Kontrollo nëse mund të hapësh llogari nga vendi yt.</li>
+    <li><strong>PayPal</strong>: në disa vende të rajonit ka kufizime (p.sh. vetëm dërgim pagesash, jo marrje). Kontrollo kushtet aktuale për vendin tënd para se të mbështetesh tek ai.</li>
+    <li><strong>Pagesë në dorëzim / transfertë lokale</strong>: për klientë dhe blerës brenda vendit.</li>
+  </ul>
+  <div class="box tip">
+    <span class="label">Këshillë</span>
+    <p>Para se të krijosh llogari në një platformë, kontrollo te "Payouts" ose "Withdrawals" me çfarë mënyre mund t'i tërheqësh paratë nga vendi yt. Kjo të kursen javë frustrimi.</p>
+  </div>
+
+  <h3>Taksat dhe ligji</h3>
+  <p>Të ardhurat online janë të ardhura si çdo të ardhur tjetër. Kur fillon të fitosh rregullisht, regjistrohu si person fizik tregtar, i vetëpunësuar ose biznes i vogël, sipas ligjit të vendit tënd. Një kontabilist të kushton pak në muaj dhe të shpëton nga gjoba. Mbaj gjithmonë një tabelë të thjeshtë me çdo pagesë që merr.</p>
+</section>
+
+<!-- ============ 02 ============ -->
+<div class="chapter">
+  <div class="num">02</div>
+  <h2>12 mënyra për të fituar online</h2>
+  <p class="lead">Lexoji të gjitha, pastaj zgjidh 1, maksimumi 2. Pyetja nuk është "cila fiton më shumë", por "cilën mund ta bëj mirë qysh këtë javë".</p>
+  <div class="bar"></div>
+</div>
+
+<section>
+  <div class="method">
+    <div class="head"><span class="n">1</span><h3>Freelancing në platforma ndërkombëtare</h3></div>
+    <p>Ofron shërbimin tënd për klientë nga e gjithë bota: shkrim, dizajn, montim videosh, programim, asistencë virtuale, futje të dhënash, shërbim klienti.</p>
+    <div class="meta">
+      <div><b>Ku</b>Upwork, Fiverr, Freelancer, PeoplePerHour</div>
+      <div><b>Fillimi</b>1–4 javë deri te klienti i parë</div>
+      <div><b>Duhet</b>Një aftësi + anglisht bazë</div>
+      <div><b>Shënim</b>Platformat mbajnë komision (Fiverr 20%)</div>
+    </div>
+    <ol>
+      <li>Zgjidh <strong>një</strong> shërbim të ngushtë (p.sh. "montoj Reels për restorante", jo "bëj gjithçka").</li>
+      <li>Krijo profil me foto të qartë, titull konkret dhe 3 shembuj pune (edhe të bërë për veten).</li>
+      <li>Apliko çdo ditë në 5–10 punë të vogla me mesazh të personalizuar. Vlerësimet e para janë gjithçka.</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">2</span><h3>Menaxhimi i rrjeteve sociale për biznese lokale</h3></div>
+    <p>Restorantet, sallonet e bukurisë, dyqanet, klinikat dentare dhe hotelet në qytetin tënd kanë nevojë për postime të rregullta, por nuk kanë kohë. Ti ua bën ti.</p>
+    <div class="meta">
+      <div><b>Ku</b>Biznese në qytetin tënd, Instagram, Facebook</div>
+      <div><b>Fillimi</b>1–3 javë</div>
+      <div><b>Duhet</b>Canva, CapCut, shije e mirë</div>
+      <div><b>Model</b>Paketë mujore për çdo biznes</div>
+    </div>
+    <ol>
+      <li>Gjej 20 biznese me profile të dobëta (postime të rralla, foto të errëta).</li>
+      <li>Bëj falas 3 postime shembull për njërin dhe dërgoja me mesazh (shablloni te Kapitulli 3).</li>
+      <li>Ofro një paketë të thjeshtë: p.sh. 12 postime + 4 Reels në muaj.</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">3</span><h3>Krijimi i përmbajtjes dhe bashkëpunimet me marka</h3></div>
+    <p>Ndërton audiencë në Instagram, TikTok ose YouTube dhe fiton nga postime të sponsorizuara, bashkëpunime me biznese dhe programet e monetizimit të platformave (ku janë të disponueshme për vendin tënd).</p>
+    <div class="meta">
+      <div><b>Ku</b>Instagram Reels, TikTok, YouTube</div>
+      <div><b>Fillimi</b>3–12 muaj</div>
+      <div><b>Duhet</b>Durim, konsistencë, një temë</div>
+      <div><b>Shënim</b>Ngadalë në fillim, e fortë më vonë</div>
+    </div>
+    <ol>
+      <li>Zgjidh një temë: dashuri dhe marrëdhënie, ushqim, humor, motivim, modë, teknologji.</li>
+      <li>Posto çdo ditë për 60 ditë. Shiko cilat video mbajnë njerëzit deri në fund.</li>
+      <li>Pas 5–10 mijë ndjekësve, kontakto marka lokale me një "media kit" njëfaqësh.</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">4</span><h3>UGC: video për marka pa qenë influencer</h3></div>
+    <p>UGC (User Generated Content) janë video të shkurtra ku ti përdor ose rekomandon një produkt. Markat i përdorin si reklama në faqet e tyre, ndaj nuk të duhen ndjekës.</p>
+    <div class="meta">
+      <div><b>Ku</b>Marka direkt, grupe UGC, platforma UGC</div>
+      <div><b>Fillimi</b>2–6 javë</div>
+      <div><b>Duhet</b>Telefon, dritë natyrale, natyrshmëri</div>
+      <div><b>Plus</b>Video në shqip për marka shqiptare</div>
+    </div>
+    <ol>
+      <li>Xhiro 3 video shembull me produkte që ke në shtëpi (kremra, kafe, rroba).</li>
+      <li>Vendosi në një portofol të thjeshtë (Canva ose Google Drive).</li>
+      <li>Shkruaju markave lokale dhe online që shesin në shqip.</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">5</span><h3>Produkte digjitale</h3></div>
+    <p>E krijon një herë dhe e shet pafundësisht: e-book (si ky), shabllone Canva, planere, CV gati, menu restorantesh, presets fotografish, receta, programe stërvitjeje.</p>
+    <div class="meta">
+      <div><b>Ku</b>Gumroad, Payhip, Lemon Squeezy, Etsy</div>
+      <div><b>Fillimi</b>1–2 javë për produktin e parë</div>
+      <div><b>Duhet</b>Njohuri + audiencë ose reklamë</div>
+      <div><b>Plus</b>Fitim pa e shkëmbyer kohën</div>
+    </div>
+    <ol>
+      <li>Zgjidh një problem që e di si zgjidhet (shiko Kapitullin 5).</li>
+      <li>Bëje produktin në Canva ose Google Docs dhe eksportoje PDF.</li>
+      <li>Vendose në një platformë dhe promovoje me Reels çdo ditë.</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">6</span><h3>Mësimdhënie online</h3></div>
+    <p>Jep mësim anglisht, matematikë, kitarë ose programim. Ka edhe një nishë të artë: <strong>gjuhën shqipe për fëmijët e diasporës</strong>. Prindërit në Gjermani, Zvicër dhe Itali kërkojnë mësues shqipeje online.</p>
+    <div class="meta">
+      <div><b>Ku</b>Preply, italki, grupet e diasporës në Facebook</div>
+      <div><b>Fillimi</b>1–3 javë</div>
+      <div><b>Duhet</b>Njohuri të forta, durim</div>
+      <div><b>Model</b>Pagesë për orë ose paketë mujore</div>
+    </div>
+    <ol>
+      <li>Krijo profil me video prezantuese 1-minutëshe.</li>
+      <li>Ofro mësimin e parë me çmim të reduktuar për të marrë vlerësime.</li>
+      <li>Kalo në paketa mujore (p.sh. 8 orë në muaj) për të ardhura të qëndrueshme.</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">7</span><h3>Përkthime dhe shkrim</h3></div>
+    <p>Përkthime shqip ↔ anglisht, italisht ose gjermanisht: dokumente, faqe interneti, titra videosh, përshkrime produktesh. Mjetet AI e përshpejtojnë punën, por klientët paguajnë për <em>cilësinë njerëzore</em> dhe korrektësinë.</p>
+    <div class="meta">
+      <div><b>Ku</b>Upwork, agjenci përkthimi, biznese lokale</div>
+      <div><b>Fillimi</b>1–4 javë</div>
+      <div><b>Duhet</b>Gjuhë e shkëlqyer në të dyja anët</div>
+      <div><b>Model</b>Për fjalë ose për faqe</div>
+    </div>
+    <ol>
+      <li>Përkthe 2–3 tekste shembull në fushën tënde (mjekësi, ligj, turizëm).</li>
+      <li>Kontakto agjenci përkthimi dhe biznese turizmi që duan faqe në shumë gjuhë.</li>
+      <li>Specializohu: përkthyesi "i turizmit" fiton më shumë se përkthyesi "i gjithçkaje".</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">8</span><h3>Marketing me afiliim</h3></div>
+    <p>Rekomandon produkte me një link personal dhe merr përqindje nga çdo shitje. Funksionon mirë vetëm kur ke audiencë që të beson.</p>
+    <div class="meta">
+      <div><b>Ku</b>Programet e afiliimit të markave dhe dyqaneve online</div>
+      <div><b>Fillimi</b>Pasi të kesh audiencë</div>
+      <div><b>Duhet</b>Besueshmëri</div>
+      <div><b>Rregull</b>Rekomando vetëm atë që e ke provuar</div>
+    </div>
+    <ol>
+      <li>Bëj listë me produktet që i përdor vërtet çdo ditë.</li>
+      <li>Kërko nëse kanë program afiliimi ("affiliate program") dhe nëse paguan në vendin tënd.</li>
+      <li>Bëj video të sinqerta "pse e përdor këtë" dhe shëno qartë që linku është afiliim.</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">9</span><h3>Dizajn grafik dhe montim videosh</h3></div>
+    <p>Logo, postime, ftesa dasme, menu, kopertina YouTube, montim Reels dhe TikTok. Kërkesa për montues videosh të shkurtra është shumë e madhe.</p>
+    <div class="meta">
+      <div><b>Ku</b>Fiverr, Upwork, biznese dhe krijues lokalë</div>
+      <div><b>Fillimi</b>2–6 javë (duhet portofol)</div>
+      <div><b>Duhet</b>Canva/CapCut ose Photoshop/Premiere</div>
+      <div><b>Plus</b>Krijuesit kanë nevojë për montues të përhershëm</div>
+    </div>
+    <ol>
+      <li>Mëso një mjet mirë (YouTube ka kurse falas për gjithçka).</li>
+      <li>Bëj 10 punë portofoli, p.sh. ridizajno logo ose rimonto video ekzistuese.</li>
+      <li>Ofroju krijuesve shqiptarë me audiencë: "Ta montoj videon tënde të radhës falas".</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">10</span><h3>Shitje online në tregun lokal</h3></div>
+    <p>Shet produkte fizike përmes Instagramit, Facebook Marketplace ose faqeve lokale të shpalljeve, me pagesë në dorëzim. Mund të jenë produkte artizanale, rroba, aksesorë ose ëmbëlsira.</p>
+    <div class="meta">
+      <div><b>Ku</b>Instagram, Facebook, faqet lokale të shpalljeve</div>
+      <div><b>Fillimi</b>1–2 javë</div>
+      <div><b>Duhet</b>Pak kapital për mallin, korrier lokal</div>
+      <div><b>Rrezik</b>Mall i pashitur, kthime</div>
+    </div>
+    <ol>
+      <li>Fillo me sasi të vogël, ose me produkte që i bën vetë.</li>
+      <li>Foto të pastra me dritë natyrale dhe Reels me produktin në përdorim.</li>
+      <li>Përgjigju mesazheve shpejt, sepse shpejtësia e shitjes është gjithçka.</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">11</span><h3>Print-on-demand</h3></div>
+    <p>Krijon dizajne (thënie në shqip, motive kombëtare, humor) dhe platforma i printon mbi bluza, filxhanë dhe posterë vetëm kur dikush blen. Nuk mban mall dhe nuk merresh me dërgesat.</p>
+    <div class="meta">
+      <div><b>Ku</b>Redbubble, Teespring/Spring, Printful + dyqan</div>
+      <div><b>Fillimi</b>1–3 muaj deri te shitjet e rregullta</div>
+      <div><b>Duhet</b>Dizajne + volum</div>
+      <div><b>Ide</b>Dhurata për diasporën: "Krenar që jam shqiptar"</div>
+    </div>
+    <ol>
+      <li>Krijo 20–30 dizajne të thjeshta me tekst në Canva.</li>
+      <li>Ngarkoji me tituj dhe fjalë kyçe të mira (shqip + anglisht).</li>
+      <li>Promovo para festave (28 Nëntori, 17 Shkurti, Krishtlindjet).</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">12</span><h3>Shërbime me ndihmën e AI</h3></div>
+    <p>Përdor mjetet AI si "punonjës" që të shpejtojnë punën: shkrim artikujsh, përshkrime produktesh, plane përmbajtjeje, përgjigje automatike për biznese. Klienti nuk paguan për AI-në. Paguan për rezultatin dhe për kohën që i kursen.</p>
+    <div class="meta">
+      <div><b>Ku</b>Biznese lokale, Fiverr, Upwork</div>
+      <div><b>Fillimi</b>1–3 javë</div>
+      <div><b>Duhet</b>Të dish ta kontrollosh dhe përmirësosh rezultatin</div>
+      <div><b>Kujdes</b>Mos dorëzo kurrë tekst AI pa e lexuar</div>
+    </div>
+    <ol>
+      <li>Mëso të shkruash udhëzime të mira dhe të redaktosh shpejt.</li>
+      <li>Ofro paketa: "30 përshkrime produktesh në shqip dhe anglisht".</li>
+      <li>Shto gjithmonë kontrollin njerëzor si vlerë të shtuar.</li>
+    </ol>
+  </div>
+
+  <div class="box key">
+    <span class="label">Cilën të zgjedh?</span>
+    <ul>
+      <li><strong>Dua para shpejt</strong>: 2, 6, 7 ose 9 (shërbime).</li>
+      <li><strong>Jam i/e mirë para kamerës</strong>: 3 ose 4.</li>
+      <li><strong>Dua të ardhura pasive më vonë</strong>: 5 ose 11, por fillo të ndërtosh audiencë që tani.</li>
+      <li><strong>Kam pak kapital dhe më pëlqen shitja</strong>: 10.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 03 ============ -->
+<div class="chapter">
+  <div class="num">03</div>
+  <h2>Klienti i parë</h2>
+  <p class="lead">Klienti i parë është më i vështiri. Pas tij, çdo gjë bëhet më e lehtë, sepse ke prova.</p>
+  <div class="bar"></div>
+</div>
+
+<section>
+  <h3 style="margin-top:0">1. Portofoli në 48 orë</h3>
+  <p>Nuk ke klientë? Bëj punë për klientë imagjinarë ose të vërtetë, falas. Ridizajno menunë e kafenesë ku pi kafe. Rimonto Reels-in e një dyqani. Përkthe faqen e një hoteli. Tri shembuj të mirë vlejnë më shumë se një CV e gjatë.</p>
+
+  <h3>2. Mesazhi që merr përgjigje</h3>
+  <p>Mesazhi i mirë është i shkurtër, personal dhe tregon vlerë që në fillim. Ja një shabllon për bizneset lokale:</p>
+  <div class="template">Përshëndetje <span class="hl">[Emri]</span>! 👋
+
+Ndjek <span class="hl">[emri i biznesit]</span> prej kohësh dhe më pëlqen shumë <span class="hl">[diçka specifike: kafeja, atmosfera]</span>.
+
+Pashë që në Instagram nuk keni postuar Reels së fundmi, edhe pse ato tani sjellin më shumë klientë të rinj. Ju bëra <span class="hl">3 postime shembull</span> falas, i keni këtu: <span class="hl">[link]</span>
+
+Nëse ju pëlqejnë, mund t'jua bëj çdo muaj. Nëse jo, mbajini si dhuratë 🙂
+
+<span class="hl">[Emri yt]</span></div>
+
+  <h3>3. Shablloni i profilit për Fiverr / Upwork</h3>
+  <div class="template"><span class="hl">Titulli:</span> Do të montoj Reels dhe TikTok profesionale për biznesin tënd
+
+<span class="hl">Përshkrimi:</span>
+A ke video, por nuk ke kohë t'i montosh?
+Unë i kthej në Reels që mbajnë njerëzit deri në fund:
+✔ prerje dinamike dhe titra
+✔ muzikë dhe efekte trend
+✔ format 9:16 gati për postim
+✔ dorëzim brenda 48 orëve
+
+Paketat: Bazë (1 video) · Standard (3 video) · Premium (8 video/muaj)</div>
+
+  <h3>4. Si të vendosësh çmimin</h3>
+  <table>
+    <tr><th>Faza</th><th>Strategjia</th></tr>
+    <tr><td>Klientët 1–3</td><td>Çmim i ulët ose falas, në këmbim të një vlerësimi dhe lejes për ta treguar punën.</td></tr>
+    <tr><td>Klientët 4–10</td><td>Çmimi i tregut. Kërko çmimet e të tjerëve në platformë dhe vendos në mes.</td></tr>
+    <tr><td>Pas 10 klientëve</td><td>Rrit çmimin 20–30% për klientët e rinj. Kur ke më shumë punë se kohë, rrite përsëri.</td></tr>
+  </table>
+  <div class="box tip">
+    <span class="label">Këshillë</span>
+    <p>Shit <strong>paketa mujore</strong>, jo punë të veçanta. Një klient me paketë mujore vlen sa 10 klientë që vijnë një herë.</p>
+  </div>
+</section>
+
+<!-- ============ 04 ============ -->
+<div class="chapter">
+  <div class="num">04</div>
+  <h2>Rritu në Instagram dhe TikTok</h2>
+  <p class="lead">Audienca është pasuria më e vlefshme online. Me të mund të shesësh çdo gjë që krijon.</p>
+  <div class="bar"></div>
+</div>
+
+<section>
+  <h3 style="margin-top:0">Formula e Reels-it që shpërndahet</h3>
+  <table>
+    <tr><th>Sekonda</th><th>Çfarë ndodh</th></tr>
+    <tr><td>0–2</td><td><strong>Grepi (hook)</strong>: një fjali ose pamje që të ndalon: "Shikoje deri në fund…", "Askush nuk ta thotë këtë…"</td></tr>
+    <tr><td>2–20</td><td><strong>Historia ose vlera</strong>: emocion, informacion ose humor. Pa pjesë të mërzitshme, prit çdo sekondë të tepërt.</td></tr>
+    <tr><td>Fundi</td><td><strong>Thirrja për veprim</strong>: "Shëno dikë…", "Ruaje për më vonë", "Komento PO".</td></tr>
+  </table>
+
+  <h3>7 rregulla për rritje</h3>
+  <ol>
+    <li><strong>Një temë.</strong> Njerëzit të ndjekin kur e dinë çfarë do të marrin.</li>
+    <li><strong>Posto çdo ditë</strong> për 60 ditë, pa e gjykuar llogarinë para kësaj.</li>
+    <li><strong>Titra në çdo video.</strong> Shumica i shikojnë pa zë.</li>
+    <li><strong>Përgjigju çdo komenti</strong> në orën e parë.</li>
+    <li><strong>Përdor trendet</strong>, por me historinë tënde.</li>
+    <li><strong>Shiko statistikat:</strong> ku largohen njerëzit? Përmirëso atë pjesë.</li>
+    <li><strong>Bio e qartë:</strong> kush je, çfarë ofron, një link.</li>
+  </ol>
+
+  <h3>Nga ndjekësit te paratë</h3>
+  <ul>
+    <li><strong>Produkti yt:</strong> e-book, shabllone, kurs. Linku në bio.</li>
+    <li><strong>Bashkëpunime:</strong> marka lokale paguajnë për postime dhe story.</li>
+    <li><strong>Shërbime:</strong> "Të bëj edhe ty video si këto". Audienca jote bëhet klientelë.</li>
+    <li><strong>Monetizimi i platformës:</strong> bonuset dhe programet e krijuesve, ku janë të disponueshme.</li>
+  </ul>
+  <div class="box tip">
+    <span class="label">Media kit njëfaqësh</span>
+    <p>Përfshi: emrin dhe temën, numrin e ndjekësve, shikimet mesatare, moshën dhe vendndodhjen e audiencës, 3 shembuj të punës, çmimet për postim/story/Reel dhe kontaktin.</p>
+  </div>
+</section>
+
+<!-- ============ 05 ============ -->
+<div class="chapter">
+  <div class="num">05</div>
+  <h2>Krijo dhe shit produktin tënd digjital</h2>
+  <p class="lead">Ky libër është vetë një shembull: e krijon një herë, e shet sa herë të duash.</p>
+  <div class="bar"></div>
+</div>
+
+<section>
+  <h3 style="margin-top:0">Hapi 1: Gjej idenë</h3>
+  <p>Pyet veten: <em>"Për çfarë më pyesin njerëzit gjithmonë?"</em> Ide që shiten mirë në shqip:</p>
+  <ul>
+    <li>Udhëzues: si të aplikosh për vizë pune, si të gjesh punë jashtë, si të mësosh anglisht vetë.</li>
+    <li>Receta: ëmbëlsira tradicionale, ushqim i shëndetshëm me buxhet të vogël.</li>
+    <li>Plane: stërvitje në shtëpi, dobësim, planer studimi për maturën.</li>
+    <li>Shabllone: CV në shqip, menu restorantesh, postime për biznese, ftesa dasme.</li>
+    <li>Fletë pune: alfabeti shqip për fëmijët e diasporës.</li>
+  </ul>
+
+  <h3>Hapi 2: Krijoje</h3>
+  <p>Canva ose Google Docs mjaftojnë. Kopertinë tërheqëse, tekst i qartë, shembuj konkretë. 20–40 faqe të mira janë më të vlefshme se 200 faqe me mbushje. Eksportoje si PDF.</p>
+
+  <h3 style="break-before: page; margin-top: 0">Hapi 3: Zgjidh platformën</h3>
+  <table>
+    <tr><th>Platforma</th><th>Pse</th><th>Kujdes</th></tr>
+    <tr><td><strong>Gumroad</strong></td><td>Shumë e thjeshtë, njihet nga blerësit</td><td>Komision për çdo shitje</td></tr>
+    <tr><td><strong>Payhip</strong></td><td>Plan falas, kupona, dyqan i thjeshtë</td><td>Komision i vogël në planin falas</td></tr>
+    <tr><td><strong>Lemon Squeezy</strong></td><td>Kujdeset vetë për TVSH-në ndërkombëtare</td><td>Kontrollo pagesat për vendin tënd</td></tr>
+    <tr><td><strong>Etsy</strong></td><td>Ka trafik të vetin blerësish</td><td>Konkurrencë e madhe, tarifë për listim</td></tr>
+    <tr><td><strong>Instagram + transfertë</strong></td><td>Pa komision platforme</td><td>E dërgon PDF-në manualisht</td></tr>
+  </table>
+  <div class="box warn">
+    <span class="label">E rëndësishme</span>
+    <p>Para se të zgjedhësh, kontrollo në faqen e platformës nëse mund t'i tërheqësh paratë në vendin tënd dhe me çfarë mënyre (PayPal, bankë, Payoneer). Kjo ndryshon nga vendi në vend dhe me kalimin e kohës.</p>
+  </div>
+
+  <h3 style="break-before: page; margin-top: 0">Hapi 4: Çmimi</h3>
+  <p>Për tregun shqiptar, e-book-ët praktikë zakonisht shiten mirë mes <strong>5€ dhe 15€</strong>. Mund të bësh edhe dy versione: "Bazë" (vetëm e-book) dhe "Premium" (e-book + shabllone + një konsultë 20-minutëshe).</p>
+
+  <h3>Hapi 5: Promovimi</h3>
+  <ol>
+    <li>Bëj 10 Reels me këshilla nga libri. Çdo video të jep një vlerë dhe në fund thotë "më shumë te linku në bio".</li>
+    <li>Ofro një pjesë falas (p.sh. kapitullin e parë) në këmbim të emailit.</li>
+    <li>Ofertë lansimi: -50% për 48 orët e para, që krijon urgjencë.</li>
+    <li>Kërko vlerësime nga blerësit e parë dhe publikoji si story.</li>
+  </ol>
+</section>
+
+<!-- ============ 06 ============ -->
+<div class="chapter">
+  <div class="num">06</div>
+  <h2>Mashtrimet që duhet t'i shmangësh</h2>
+  <p class="lead">Për çdo mundësi reale ka dhjetë mashtrime. Mësoji shenjat.</p>
+  <div class="bar"></div>
+</div>
+
+<section>
+  <table>
+    <tr><th>Mashtrimi</th><th>Si e njeh</th></tr>
+    <tr><td>"Punë nga shtëpia, 100€ në ditë, pa eksperiencë"</td><td>Premtim i tepërt, pa përshkrim pune të qartë.</td></tr>
+    <tr><td>Paguaj "tarifë regjistrimi" ose "trajnim" për të marrë punën</td><td>Punëdhënësi i vërtetë nuk të kërkon para.</td></tr>
+    <tr><td>Skema piramidale / "rrjeti"</td><td>Fiton duke futur njerëz të tjerë, jo duke shitur produkt real.</td></tr>
+    <tr><td>Kriptovaluta ose trading me "fitim të garantuar"</td><td>Askush nuk mund të garantojë fitim në investime.</td></tr>
+    <tr><td>"Kliko reklama / shiko video dhe fito"</td><td>Paguan centë, ose nuk paguan fare kur arrin kufirin e tërheqjes.</td></tr>
+    <tr><td>Klient që paguan "më shumë" dhe kërkon kthimin e diferencës</td><td>Çeku ose pagesa e parë do të anulohet më vonë.</td></tr>
+    <tr><td>Kërkesë për fjalëkalime, kode SMS ose dokumente identiteti në fillim</td><td>Vjedhje identiteti ose llogarie.</td></tr>
+  </table>
+  <div class="box key">
+    <span class="label">Rregulli i artë</span>
+    <p>Nëse duket shumë e mirë për të qenë e vërtetë, nuk është e vërtetë. Punë në platforma të njohura, pagesa përmes platformës dhe asnjë pagesë nga ana jote për të "filluar".</p>
+  </div>
+</section>
+
+<!-- ============ 07 ============ -->
+<div class="chapter">
+  <div class="num">07</div>
+  <h2>Plani 30-ditor</h2>
+  <p class="lead">Një orë e gjysmë në ditë mjafton për të filluar. Ndiqe hap pas hapi.</p>
+  <div class="bar"></div>
+</div>
+
+<section>
+  <div class="week">
+    <h3>Java 1: Zgjedhja dhe përgatitja</h3>
+    <ul>
+      <li>Zgjidh 1 metodë nga Kapitulli 2 dhe shkruaje qëllimin: "Deri në ditën 30 dua klientin e parë / shitjen e parë."</li>
+      <li>Hap llogarinë e pagesave (Payoneer, bankë) dhe kontrollo si tërhiqen paratë.</li>
+      <li>Krijo profilet: Instagram profesional + platforma e zgjedhur.</li>
+      <li>Mëso mjetin kryesor (Canva, CapCut) me 2–3 video falas në YouTube.</li>
+    </ul>
+  </div>
+  <div class="week">
+    <h3>Java 2: Portofoli dhe prania online</h3>
+    <ul>
+      <li>Krijo 3–5 shembuj pune ose draftin e produktit tënd digjital.</li>
+      <li>Posto 1 Reel në ditë për temën tënde.</li>
+      <li>Bëj listën e 30 klientëve të mundshëm (biznese, krijues, prindër të diasporës).</li>
+    </ul>
+  </div>
+  <div class="week">
+    <h3>Java 3: Kontakti</h3>
+    <ul>
+      <li>Dërgo 5–10 mesazhe të personalizuara në ditë (shablloni te Kapitulli 3).</li>
+      <li>Apliko në 5 punë në ditë në platformë.</li>
+      <li>Nëse ke produkt digjital, nise me ofertë lansimi.</li>
+    </ul>
+  </div>
+  <div class="week">
+    <h3>Java 4: Klienti i parë dhe përmirësimi</h3>
+    <ul>
+      <li>Kryeje punën e parë shkëlqyeshëm dhe kërko vlerësim dhe rekomandim.</li>
+      <li>Shiko numrat: sa mesazhe dërgove, sa u përgjigjën, cilat Reels ecën mirë.</li>
+      <li>Përmirëso atë që nuk funksionoi dhe planifiko muajin e dytë.</li>
+    </ul>
+  </div>
+
+  <h3>Lista e kontrollit</h3>
+  <ul class="check">
+    <li>Kam zgjedhur një metodë dhe një qëllim për 30 ditë</li>
+    <li>Kam një mënyrë funksionale për të marrë pagesa</li>
+    <li>Kam profil profesional dhe 3 shembuj pune</li>
+    <li>Kam listën e 30 klientëve të mundshëm</li>
+    <li>Postoj përmbajtje çdo ditë</li>
+    <li>Mbaj shënim çdo të ardhur dhe çdo orë pune</li>
+  </ul>
+</section>
+
+<section>
+  <div class="end">
+    <h2>Fillo sot. Jo të hënën.</h2>
+    <p>Dallimi mes atyre që fitojnë online dhe atyre që vetëm ëndërrojnë nuk është talenti. Është që të parët filluan, gabuan, mësuan dhe vazhduan.</p>
+    <p>Hapi i parë yt është i vogël: zgjidh një metodë nga ky libër dhe bëj një gjë për të brenda 24 orëve.</p>
+    <p style="margin-top:10mm; color: var(--accent); font-weight: 700;">Suksese! 💪</p>
+    <p class="small" style="margin-top:14mm">© Tinguj Shqip. Të gjitha të drejtat e rezervuara. Ky e-book është për përdorim personal të blerësit dhe nuk lejohet rishpërndarja ose rishitja pa leje.</p>
+  </div>
+</section>
+
+</body>
+</html>
