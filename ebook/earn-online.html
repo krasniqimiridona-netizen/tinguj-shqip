@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Earn Online: A practical guide to making money on the internet</title>
+<style>
+  @page {
+    size: A5;
+    margin: 18mm 15mm 18mm 15mm;
+    @bottom-center { content: counter(page); font-family: Inter, sans-serif; font-size: 8pt; color: #8a8f98; }
+  }
+  @page cover { margin: 0; @bottom-center { content: none; } }
+  @page chapter { @bottom-center { content: none; } }
+
+  :root {
+    --ink: #1b1d23;
+    --muted: #5b616e;
+    --accent: #e0245e;
+    --accent-2: #7c3aed;
+    --soft: #fdf2f6;
+    --soft-2: #f4f0ff;
+    --line: #e6e7eb;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0;
+    font-family: Inter, "DejaVu Sans", sans-serif;
+    font-size: 9.6pt;
+    line-height: 1.55;
+    color: var(--ink);
+    hyphens: auto;
+  }
+  h1, h2, h3 { font-family: "Inter Display", Inter, sans-serif; line-height: 1.2; margin: 0; }
+  h2 { font-size: 15pt; margin: 0 0 3mm; letter-spacing: -0.01em; }
+  h3 { font-size: 11pt; margin: 5mm 0 1.5mm; break-after: avoid; }
+  p { margin: 0 0 2.6mm; }
+  ul, ol { margin: 0 0 3mm; padding-left: 5mm; }
+  li { margin-bottom: 1.2mm; }
+  strong { font-weight: 650; }
+  a { color: var(--accent-2); text-decoration: none; }
+
+  /* ---------- cover ---------- */
+  .cover {
+    page: cover;
+    height: 210mm; width: 148mm;
+    position: relative; overflow: hidden;
+    background: radial-gradient(120% 80% at 80% 0%, #7c3aed 0%, rgba(124,58,237,0) 60%),
+                radial-gradient(100% 70% at 0% 100%, #e0245e 0%, rgba(224,36,94,0) 60%),
+                #14101f;
+    color: #fff;
+    padding: 20mm 14mm;
+    break-after: page;
+  }
+  .cover .tag { display: inline-block; font-size: 8pt; letter-spacing: .18em; text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,.4); border-radius: 20px; padding: 1.2mm 3.5mm; }
+  .cover h1 { font-size: 40pt; font-weight: 800; letter-spacing: -0.03em; margin: 22mm 0 4mm; line-height: 1; }
+  .cover h1 span { color: #ff7aa8; }
+  .cover .sub { font-size: 12.5pt; line-height: 1.4; color: rgba(255,255,255,.88); max-width: 105mm; }
+  .cover .chips { margin-top: 12mm; display: flex; flex-wrap: wrap; gap: 2mm; }
+  .cover .chips span { background: rgba(255,255,255,.12); border-radius: 3mm; padding: 1.5mm 3mm; font-size: 8.5pt; }
+  .cover .author { position: absolute; bottom: 16mm; left: 14mm; right: 14mm; font-size: 9pt;
+    color: rgba(255,255,255,.75); border-top: 1px solid rgba(255,255,255,.25); padding-top: 4mm;
+    display: flex; justify-content: space-between; }
+  .cover .coin { position: absolute; right: -18mm; top: 92mm; width: 70mm; height: 70mm; border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.18); }
+  .cover .coin::after { content: "€"; position: absolute; inset: 0; display: grid; place-items: center;
+    font-size: 54pt; font-weight: 800; color: rgba(255,255,255,.14); }
+
+  /* ---------- chapter openers ---------- */
+  .chapter {
+    page: chapter;
+    break-before: page;
+    padding-top: 32mm;
+  }
+  .chapter .num { font-family: "Inter Display", Inter; font-size: 54pt; font-weight: 800; color: var(--accent);
+    line-height: 1; letter-spacing: -0.04em; }
+  .chapter h2 { font-size: 22pt; margin-top: 3mm; }
+  .chapter .lead { font-size: 11pt; color: var(--muted); margin-top: 4mm; max-width: 100mm; }
+  .chapter .bar { width: 18mm; height: 1.4mm; background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    border-radius: 1mm; margin-top: 8mm; }
+  section { break-before: page; }
+  section.flow { break-before: auto; }
+
+  /* ---------- blocks ---------- */
+  .box { border-radius: 3mm; padding: 3.5mm 4mm; margin: 3mm 0 4mm; break-inside: avoid; }
+  .box.tip { background: var(--soft-2); border-left: 1.2mm solid var(--accent-2); }
+  .box.warn { background: #fff6e8; border-left: 1.2mm solid #f59e0b; }
+  .box.key { background: var(--soft); border-left: 1.2mm solid var(--accent); }
+  .box .label { font-size: 7.5pt; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 1mm; display: block; }
+  .box.tip .label { color: var(--accent-2); }
+  .box.warn .label { color: #b45309; }
+  .box.key .label { color: var(--accent); }
+  .box p:last-child, .box ul:last-child { margin-bottom: 0; }
+
+  .method { border: 1px solid var(--line); border-radius: 3mm; padding: 4mm; margin: 0 0 4mm; break-inside: avoid; }
+  .method .head { display: flex; align-items: baseline; gap: 3mm; margin-bottom: 2mm; }
+  .method .n { font-family: "Inter Display", Inter; font-weight: 800; font-size: 16pt; color: var(--accent); }
+  .method h3 { margin: 0; font-size: 12pt; }
+  .meta { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5mm 4mm; font-size: 8.4pt; background: #f7f7f9;
+    border-radius: 2mm; padding: 2.5mm 3mm; margin: 2mm 0 2.5mm; }
+  .meta b { display: block; font-size: 7pt; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .method ol { margin-bottom: 0; }
+  .method { padding: 3mm 3.5mm; margin-bottom: 3mm; }
+  .method p, .method li { font-size: 8.6pt; line-height: 1.42; }
+  .method li { margin-bottom: .6mm; }
+  .method p { margin-bottom: 1.5mm; }
+  .method .head { margin-bottom: 1mm; }
+  .method h3 { font-size: 11pt; }
+  .method .meta { font-size: 7.6pt; line-height: 1.35; padding: 2mm 2.5mm; margin: 1.5mm 0 2mm; gap: 1mm 4mm; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 8.4pt; margin: 2mm 0 4mm; break-inside: avoid; }
+  th { text-align: left; background: #1b1d23; color: #fff; font-weight: 600; padding: 2mm 2.5mm; }
+  th:first-child { border-top-left-radius: 2mm; } th:last-child { border-top-right-radius: 2mm; }
+  td { padding: 2mm 2.5mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:nth-child(even) td { background: #fafafb; }
+
+  .template { font-family: "DejaVu Sans Mono", monospace; font-size: 7.8pt; line-height: 1.5; background: #14101f; color: #eee;
+    border-radius: 3mm; padding: 4mm; white-space: pre-wrap; margin: 2mm 0 4mm; break-inside: avoid; }
+  .template .hl { color: #ff7aa8; }
+
+  .toc { list-style: none; padding: 0; margin-top: 6mm; }
+  .toc li { display: flex; gap: 4mm; padding: 2.6mm 0; border-bottom: 1px solid var(--line); margin: 0; font-size: 10pt; }
+  .toc .n { font-weight: 800; color: var(--accent); width: 8mm; }
+  .toc .t { flex: 1; }
+  .toc .d { color: var(--muted); font-size: 8.5pt; }
+
+  .check { list-style: none; padding: 0; }
+  .check li { padding-left: 7mm; position: relative; }
+  .check li::before { content: ""; position: absolute; left: 0; top: .9mm; width: 3.4mm; height: 3.4mm;
+    border: 1.3px solid var(--accent); border-radius: 1mm; }
+
+  .week { border-radius: 3mm; padding: 3.5mm 4mm; margin-bottom: 3mm; break-inside: avoid; background: #f7f7f9; }
+  .week h3 { margin: 0 0 1.5mm; font-size: 10.5pt; color: var(--accent-2); }
+  .week ul { margin: 0; }
+
+  .end { text-align: center; padding-top: 40mm; }
+  .end h2 { font-size: 20pt; }
+  .end p { color: var(--muted); max-width: 100mm; margin: 4mm auto; }
+  .small { font-size: 7.8pt; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <span class="tag">Practical guide · 2026</span>
+  <h1>Earn<br><span>Online</span></h1>
+  <p class="sub">12 real ways to make money on the internet, from anywhere, starting with what you already have.</p>
+  <div class="chips">
+    <span>No big investment</span><span>Step by step</span><span>30-day plan</span><span>Ready-to-use templates</span>
+  </div>
+  <div class="coin"></div>
+  <div class="author"><span>Tinguj Shqip</span><span>E-book</span></div>
+</div>
+
+<!-- ============ TOC ============ -->
+<section class="flow" style="break-before: auto">
+  <h2>Contents</h2>
+  <ul class="toc">
+    <li><span class="n">00</span><span class="t">Before you start<br><span class="d">The reality, the rules and the right mindset</span></span></li>
+    <li><span class="n">01</span><span class="t">Getting set up<br><span class="d">Tools, payments and taxes</span></span></li>
+    <li><span class="n">02</span><span class="t">12 ways to earn online<br><span class="d">What they are, where to find them, how to start</span></span></li>
+    <li><span class="n">03</span><span class="t">Your first client<br><span class="d">Portfolio, outreach messages and pricing</span></span></li>
+    <li><span class="n">04</span><span class="t">Grow on Instagram and TikTok<br><span class="d">Reels, audience and earning from social media</span></span></li>
+    <li><span class="n">05</span><span class="t">Create and sell your own digital product<br><span class="d">From idea to first sale</span></span></li>
+    <li><span class="n">06</span><span class="t">Scams to avoid</span></li>
+    <li><span class="n">07</span><span class="t">The 30-day plan<br><span class="d">What to do each week</span></span></li>
+  </ul>
+  <p class="small" style="margin-top:8mm">This book is for educational purposes. Platforms change their terms, fees and the countries they support, so always check their official website before you begin. Any amounts mentioned are illustrative examples, not promises of income.</p>
+</section>
+
+<!-- ============ 00 ============ -->
+<div class="chapter">
+  <div class="num">00</div>
+  <h2>Before you start</h2>
+  <p class="lead">The internet is not a money machine. It's a marketplace. Whoever provides value gets paid.</p>
+  <div class="bar"></div>
+</div>
+
+<section>
+  <h3 style="margin-top:0">The truth nobody tells you</h3>
+  <p>On social media you'll see people who "make $10,000 a month from their phone". Most of them make money by selling you the dream, not by doing what they advertise. The real ways to earn online are less magical, but they work:</p>
+  <ul>
+    <li><strong>Sell your time</strong>: freelancing, teaching, social media management.</li>
+    <li><strong>Sell a product</strong>: e-books, templates, courses, physical products.</li>
+    <li><strong>Sell attention</strong>: content creation, brand deals, affiliate marketing.</li>
+  </ul>
+  <p>The fastest start is almost always the first one: sell a skill you already have. Products and audiences come later and grow over time.</p>
+
+  <div class="box key">
+    <span class="label">3 golden rules</span>
+    <ul>
+      <li><strong>Never pay to get work.</strong> The client pays you, not the other way round.</li>
+      <li><strong>Pick one path and stick with it for 90 days.</strong> People who switch methods every week never get anywhere.</li>
+      <li><strong>Measure everything.</strong> How many hours you worked, how much you earned, where each client came from. The numbers show you where to focus.</li>
+    </ul>
+  </div>
+
+  <h3>Your unfair advantage</h3>
+  <p>You have something most of the world doesn't: <strong>your native language and your knowledge of your local market</strong>. Businesses, families and emigrant communities need translations, lessons, marketing and products in their own language, and these niches have little global competition. Albanian alone has over 10 million speakers across the Balkans and the diaspora. Every extra language you speak opens up a new market.</p>
+</section>
+
+<!-- ============ 01 ============ -->
+<div class="chapter">
+  <div class="num">01</div>
+  <h2>Getting set up</h2>
+  <p class="lead">What you need before day one: a few tools, a way to get paid and your taxes in order.</p>
+  <div class="bar"></div>
+</div>
+
+<section>
+  <h3 style="margin-top:0">The basic tools</h3>
+  <table>
+    <tr><th>Tool</th><th>What it's for</th><th>Cost</th></tr>
+    <tr><td>A good phone or laptop</td><td>Almost every method. You'll need a laptop for serious freelancing.</td><td>What you have</td></tr>
+    <tr><td>Professional email</td><td>firstname.lastname@gmail.com, not "princess_99"</td><td>Free</td></tr>
+    <tr><td>Canva</td><td>Design, posts, CVs, e-books</td><td>Free / paid Pro</td></tr>
+    <tr><td>CapCut</td><td>Video editing for Reels and TikTok</td><td>Free / paid Pro</td></tr>
+    <tr><td>Google Drive / Docs</td><td>Documents, portfolio, invoices</td><td>Free</td></tr>
+    <tr><td>AI assistant</td><td>Ideas, drafts, first-pass translations, plans</td><td>Free / paid</td></tr>
+  </table>
+
+  <h3>How to get paid</h3>
+  <p>This is where many people get stuck, because not every payment service works the same way in every country. The most common options:</p>
+  <ul>
+    <li><strong>Payoneer</strong>: widely used by freelancers. It connects to Upwork, Fiverr and many other platforms, and you withdraw to your bank account.</li>
+    <li><strong>A bank account in euros or dollars</strong>: most platforms pay by direct transfer (SWIFT/SEPA).</li>
+    <li><strong>Wise</strong>: good for international transfers with low fees. Check whether you can open an account from your country.</li>
+    <li><strong>PayPal</strong>: in some countries it has limits (for example, send-only accounts that can't receive money). Check the current terms for your country before relying on it.</li>
+    <li><strong>Cash on delivery / local transfer</strong>: for clients and buyers in your own country.</li>
+  </ul>
+  <div class="box tip">
+    <span class="label">Tip</span>
+    <p>Before you sign up to any platform, look at its "Payouts" or "Withdrawals" page to see how you can withdraw money from your country. This saves you weeks of frustration.</p>
+  </div>
+
+  <h3>Taxes and the law</h3>
+  <p>Online income is income like any other. Once you're earning regularly, register as a sole trader, self-employed person or small business, according to the law where you live. An accountant costs little each month and saves you from fines. Always keep a simple spreadsheet of every payment you receive.</p>
+</section>
+
+<!-- ============ 02 ============ -->
+<div class="chapter">
+  <div class="num">02</div>
+  <h2>12 ways to earn online</h2>
+  <p class="lead">Read them all, then pick 1, at most 2. The question isn't "which one pays the most", it's "which one can I do well starting this week".</p>
+  <div class="bar"></div>
+</div>
+
+<section>
+  <div class="method">
+    <div class="head"><span class="n">1</span><h3>Freelancing on international platforms</h3></div>
+    <p>You offer your service to clients around the world: writing, design, video editing, programming, virtual assistance, data entry, customer support.</p>
+    <div class="meta">
+      <div><b>Where</b>Upwork, Fiverr, Freelancer, PeoplePerHour</div>
+      <div><b>Time to start</b>1–4 weeks to your first client</div>
+      <div><b>You need</b>One skill + basic English</div>
+      <div><b>Note</b>Platforms take a commission (Fiverr 20%)</div>
+    </div>
+    <ol>
+      <li>Pick <strong>one</strong> narrow service (e.g. "I edit Reels for restaurants", not "I do everything").</li>
+      <li>Build a profile with a clear photo, a specific headline and 3 work samples (even ones made for yourself).</li>
+      <li>Apply to 5–10 small jobs every day with a personalised message. Your first reviews are everything.</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">2</span><h3>Social media management for local businesses</h3></div>
+    <p>Restaurants, beauty salons, shops, dental clinics and hotels in your town need regular posts but don't have the time. You do it for them.</p>
+    <div class="meta">
+      <div><b>Where</b>Businesses in your town, Instagram, Facebook</div>
+      <div><b>Time to start</b>1–3 weeks</div>
+      <div><b>You need</b>Canva, CapCut, good taste</div>
+      <div><b>Model</b>Monthly package per business</div>
+    </div>
+    <ol>
+      <li>Find 20 businesses with weak profiles (rare posts, dark photos).</li>
+      <li>Make 3 free sample posts for one of them and send them over (template in Chapter 3).</li>
+      <li>Offer a simple package: e.g. 12 posts + 4 Reels a month.</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">3</span><h3>Content creation and brand deals</h3></div>
+    <p>You build an audience on Instagram, TikTok or YouTube and earn from sponsored posts, business collaborations and the platforms' own monetisation programmes (where they're available in your country).</p>
+    <div class="meta">
+      <div><b>Where</b>Instagram Reels, TikTok, YouTube</div>
+      <div><b>Time to start</b>3–12 months</div>
+      <div><b>You need</b>Patience, consistency, one topic</div>
+      <div><b>Note</b>Slow at first, strong later</div>
+    </div>
+    <ol>
+      <li>Pick a topic: love and relationships, food, comedy, motivation, fashion, tech.</li>
+      <li>Post every day for 60 days. Watch which videos keep people to the end.</li>
+      <li>Once you have 5–10k followers, approach local brands with a one-page "media kit".</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">4</span><h3>UGC: videos for brands without being an influencer</h3></div>
+    <p>UGC (user-generated content) means short videos where you use or recommend a product. Brands run them as ads on their own pages, so you don't need followers.</p>
+    <div class="meta">
+      <div><b>Where</b>Brands directly, UGC groups, UGC platforms</div>
+      <div><b>Time to start</b>2–6 weeks</div>
+      <div><b>You need</b>A phone, natural light, being natural</div>
+      <div><b>Bonus</b>Videos in your language for local brands</div>
+    </div>
+    <ol>
+      <li>Film 3 sample videos with products you have at home (creams, coffee, clothes).</li>
+      <li>Put them in a simple portfolio (Canva or Google Drive).</li>
+      <li>Reach out to local brands and online shops that sell in your language.</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">5</span><h3>Digital products</h3></div>
+    <p>Create it once and sell it forever: e-books (like this one), Canva templates, planners, ready-made CVs, restaurant menus, photo presets, recipes, workout programmes.</p>
+    <div class="meta">
+      <div><b>Where</b>Gumroad, Payhip, Lemon Squeezy, Etsy</div>
+      <div><b>Time to start</b>1–2 weeks for your first product</div>
+      <div><b>You need</b>Know-how + an audience or ads</div>
+      <div><b>Bonus</b>Income that isn't traded for your time</div>
+    </div>
+    <ol>
+      <li>Pick a problem you know how to solve (see Chapter 5).</li>
+      <li>Make the product in Canva or Google Docs and export it as a PDF.</li>
+      <li>Put it on a platform and promote it with a Reel every day.</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">6</span><h3>Online teaching</h3></div>
+    <p>Teach English, maths, guitar or coding. There's also a golden niche: <strong>teaching your native language to the children of emigrant families</strong>. Parents abroad actively look for online teachers so their kids keep the language.</p>
+    <div class="meta">
+      <div><b>Where</b>Preply, italki, diaspora Facebook groups</div>
+      <div><b>Time to start</b>1–3 weeks</div>
+      <div><b>You need</b>Solid knowledge, patience</div>
+      <div><b>Model</b>Per hour or monthly package</div>
+    </div>
+    <ol>
+      <li>Create a profile with a 1-minute intro video.</li>
+      <li>Offer your first lesson at a discount to collect reviews.</li>
+      <li>Move to monthly packages (e.g. 8 hours a month) for steady income.</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">7</span><h3>Translation and writing</h3></div>
+    <p>Translate between your language and English, Italian or German: documents, websites, video subtitles, product descriptions. AI tools speed up the work, but clients pay for <em>human quality</em> and accuracy.</p>
+    <div class="meta">
+      <div><b>Where</b>Upwork, translation agencies, local businesses</div>
+      <div><b>Time to start</b>1–4 weeks</div>
+      <div><b>You need</b>Excellent command of both languages</div>
+      <div><b>Model</b>Per word or per page</div>
+    </div>
+    <ol>
+      <li>Translate 2–3 sample texts in your field (medical, legal, tourism).</li>
+      <li>Contact translation agencies and tourism businesses that want multilingual websites.</li>
+      <li>Specialise: a "tourism translator" earns more than an "everything translator".</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">8</span><h3>Affiliate marketing</h3></div>
+    <p>You recommend products with a personal link and earn a percentage of every sale. It only works once you have an audience that trusts you.</p>
+    <div class="meta">
+      <div><b>Where</b>Affiliate programmes of brands and online shops</div>
+      <div><b>Time to start</b>Once you have an audience</div>
+      <div><b>You need</b>Credibility</div>
+      <div><b>Rule</b>Only recommend what you've actually tried</div>
+    </div>
+    <ol>
+      <li>List the products you genuinely use every day.</li>
+      <li>Check whether they have an affiliate programme and whether it pays out in your country.</li>
+      <li>Make honest "why I use this" videos and clearly disclose that the link is an affiliate link.</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">9</span><h3>Graphic design and video editing</h3></div>
+    <p>Logos, posts, wedding invitations, menus, YouTube thumbnails, Reels and TikTok editing. Demand for short-form video editors is huge.</p>
+    <div class="meta">
+      <div><b>Where</b>Fiverr, Upwork, local businesses and creators</div>
+      <div><b>Time to start</b>2–6 weeks (you need a portfolio)</div>
+      <div><b>You need</b>Canva/CapCut or Photoshop/Premiere</div>
+      <div><b>Bonus</b>Creators need long-term editors</div>
+    </div>
+    <ol>
+      <li>Learn one tool well (YouTube has free courses for everything).</li>
+      <li>Make 10 portfolio pieces, e.g. redesign logos or re-edit existing videos.</li>
+      <li>Pitch creators with an audience: "Let me edit your next video for free."</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">10</span><h3>Selling online in your local market</h3></div>
+    <p>Sell physical products through Instagram, Facebook Marketplace or local classifieds sites, with cash on delivery. These can be handmade items, clothes, accessories or baked goods.</p>
+    <div class="meta">
+      <div><b>Where</b>Instagram, Facebook, local classifieds</div>
+      <div><b>Time to start</b>1–2 weeks</div>
+      <div><b>You need</b>A little capital for stock, a local courier</div>
+      <div><b>Risk</b>Unsold stock, returns</div>
+    </div>
+    <ol>
+      <li>Start with small quantities, or with products you make yourself.</li>
+      <li>Shoot clean photos in natural light and Reels showing the product in use.</li>
+      <li>Reply to messages fast, because speed is what closes the sale.</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">11</span><h3>Print-on-demand</h3></div>
+    <p>You create designs (quotes, cultural motifs, humour) and the platform prints them on T-shirts, mugs and posters only when someone buys. No stock and no shipping to handle.</p>
+    <div class="meta">
+      <div><b>Where</b>Redbubble, Spring, Printful + your own shop</div>
+      <div><b>Time to start</b>1–3 months to regular sales</div>
+      <div><b>You need</b>Designs + volume</div>
+      <div><b>Idea</b>Gifts for people living abroad who miss home</div>
+    </div>
+    <ol>
+      <li>Create 20–30 simple text designs in Canva.</li>
+      <li>Upload them with good titles and keywords, in your language and in English.</li>
+      <li>Promote them before holidays and national days.</li>
+    </ol>
+  </div>
+
+  <div class="method">
+    <div class="head"><span class="n">12</span><h3>AI-assisted services</h3></div>
+    <p>Use AI tools as "employees" that speed up your work: articles, product descriptions, content plans, automated replies for businesses. The client isn't paying for the AI. They're paying for the result and for the time you save them.</p>
+    <div class="meta">
+      <div><b>Where</b>Local businesses, Fiverr, Upwork</div>
+      <div><b>Time to start</b>1–3 weeks</div>
+      <div><b>You need</b>The skill to check and improve the output</div>
+      <div><b>Careful</b>Never deliver AI text without reading it</div>
+    </div>
+    <ol>
+      <li>Learn to write good prompts and to edit quickly.</li>
+      <li>Offer packages: "30 product descriptions in two languages".</li>
+      <li>Always add human review as your extra value.</li>
+    </ol>
+  </div>
+
+  <div class="box key">
+    <span class="label">Which one should I pick?</span>
+    <ul>
+      <li><strong>I need money fast</strong>: 2, 6, 7 or 9 (services).</li>
+      <li><strong>I'm good on camera</strong>: 3 or 4.</li>
+      <li><strong>I want passive income later</strong>: 5 or 11, but start building an audience now.</li>
+      <li><strong>I have a little capital and I like selling</strong>: 10.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 03 ============ -->
+<div class="chapter">
+  <div class="num">03</div>
+  <h2>Your first client</h2>
+  <p class="lead">The first client is the hardest. After that everything gets easier, because you have proof.</p>
+  <div class="bar"></div>
+</div>
+
+<section>
+  <h3 style="margin-top:0">1. A portfolio in 48 hours</h3>
+  <p>No clients yet? Do work for imaginary or real clients, for free. Redesign the menu of the café you go to. Re-edit a shop's Reel. Translate a hotel's website. Three good samples are worth more than a long CV.</p>
+
+  <h3>2. The message that gets a reply</h3>
+  <p>A good message is short, personal and shows value up front. Here's a template for local businesses:</p>
+  <div class="template">Hi <span class="hl">[Name]</span>! 👋
+
+I've been following <span class="hl">[business name]</span> for a while and I really love <span class="hl">[something specific: the coffee, the atmosphere]</span>.
+
+I noticed you haven't posted Reels on Instagram lately, even though they're what brings in the most new customers right now. I made you <span class="hl">3 free sample posts</span>, here they are: <span class="hl">[link]</span>
+
+If you like them, I can make them for you every month. If not, keep them as a gift 🙂
+
+<span class="hl">[Your name]</span></div>
+
+  <h3>3. Profile template for Fiverr / Upwork</h3>
+  <div class="template"><span class="hl">Title:</span> I will edit professional Reels and TikToks for your business
+
+<span class="hl">Description:</span>
+Have videos but no time to edit them?
+I turn them into Reels that keep people watching to the end:
+✔ dynamic cuts and captions
+✔ trending music and effects
+✔ 9:16 format, ready to post
+✔ delivery within 48 hours
+
+Packages: Basic (1 video) · Standard (3 videos) · Premium (8 videos/month)</div>
+
+  <h3>4. How to set your price</h3>
+  <table>
+    <tr><th>Stage</th><th>Strategy</th></tr>
+    <tr><td>Clients 1–3</td><td>Low price or free, in exchange for a review and permission to show the work.</td></tr>
+    <tr><td>Clients 4–10</td><td>Market price. Look up what others charge on the platform and price yourself in the middle.</td></tr>
+    <tr><td>After 10 clients</td><td>Raise your price 20–30% for new clients. When you have more work than time, raise it again.</td></tr>
+  </table>
+  <div class="box tip">
+    <span class="label">Tip</span>
+    <p>Sell <strong>monthly packages</strong>, not one-off jobs. One client on a monthly package is worth 10 one-time clients.</p>
+  </div>
+</section>
+
+<!-- ============ 04 ============ -->
+<div class="chapter">
+  <div class="num">04</div>
+  <h2>Grow on Instagram and TikTok</h2>
+  <p class="lead">An audience is the most valuable asset online. With it, you can sell anything you create.</p>
+  <div class="bar"></div>
+</div>
+
+<section>
+  <h3 style="margin-top:0">The formula for a Reel that spreads</h3>
+  <table>
+    <tr><th>Seconds</th><th>What happens</th></tr>
+    <tr><td>0–2</td><td><strong>The hook</strong>: a line or image that stops the scroll: "Watch till the end…", "Nobody tells you this…"</td></tr>
+    <tr><td>2–20</td><td><strong>The story or the value</strong>: emotion, information or humour. No boring parts, cut every extra second.</td></tr>
+    <tr><td>The end</td><td><strong>The call to action</strong>: "Tag someone…", "Save this for later", "Comment YES".</td></tr>
+  </table>
+
+  <h3>7 rules for growth</h3>
+  <ol>
+    <li><strong>One topic.</strong> People follow you when they know what they'll get.</li>
+    <li><strong>Post every day</strong> for 60 days, without judging the account before then.</li>
+    <li><strong>Captions on every video.</strong> Most people watch with the sound off.</li>
+    <li><strong>Reply to every comment</strong> in the first hour.</li>
+    <li><strong>Use trends</strong>, but tell your own story with them.</li>
+    <li><strong>Check your analytics:</strong> where do people drop off? Fix that part.</li>
+    <li><strong>A clear bio:</strong> who you are, what you offer, one link.</li>
+  </ol>
+
+  <h3>From followers to money</h3>
+  <ul>
+    <li><strong>Your own product:</strong> e-book, templates, course. Link in bio.</li>
+    <li><strong>Brand deals:</strong> local brands pay for posts and stories.</li>
+    <li><strong>Services:</strong> "I can make videos like these for you too." Your audience becomes your clients.</li>
+    <li><strong>Platform monetisation:</strong> creator bonuses and programmes, where available.</li>
+  </ul>
+  <div class="box tip">
+    <span class="label">One-page media kit</span>
+    <p>Include: your name and topic, follower count, average views, your audience's age and location, 3 examples of your work, your rates for a post, story and Reel, and your contact details.</p>
+  </div>
+</section>
+
+<!-- ============ 05 ============ -->
+<div class="chapter">
+  <div class="num">05</div>
+  <h2>Create and sell your own digital product</h2>
+  <p class="lead">This book is an example itself: you create it once and sell it as many times as you like.</p>
+  <div class="bar"></div>
+</div>
+
+<section>
+  <h3 style="margin-top:0">Step 1: Find the idea</h3>
+  <p>Ask yourself: <em>"What do people always ask me about?"</em> Ideas that sell well:</p>
+  <ul>
+    <li>Guides: how to apply for a work visa, how to find a job abroad, how to teach yourself English.</li>
+    <li>Recipes: traditional desserts, healthy food on a small budget.</li>
+    <li>Plans: home workouts, weight loss, a study planner for exams.</li>
+    <li>Templates: CVs, restaurant menus, business posts, wedding invitations.</li>
+    <li>Worksheets: alphabet and first words for children learning their parents' language.</li>
+  </ul>
+
+  <h3>Step 2: Create it</h3>
+  <p>Canva or Google Docs is enough. An eye-catching cover, clear text, concrete examples. 20–40 good pages are worth more than 200 pages of filler. Export it as a PDF.</p>
+
+  <h3 style="break-before: page; margin-top: 0">Step 3: Pick a platform</h3>
+  <table>
+    <tr><th>Platform</th><th>Why</th><th>Watch out</th></tr>
+    <tr><td><strong>Gumroad</strong></td><td>Very simple, buyers know it</td><td>Commission on every sale</td></tr>
+    <tr><td><strong>Payhip</strong></td><td>Free plan, coupons, simple shop</td><td>Small commission on the free plan</td></tr>
+    <tr><td><strong>Lemon Squeezy</strong></td><td>Handles international VAT for you</td><td>Check payouts for your country</td></tr>
+    <tr><td><strong>Etsy</strong></td><td>Has its own buyer traffic</td><td>Heavy competition, listing fee</td></tr>
+    <tr><td><strong>Instagram + bank transfer</strong></td><td>No platform commission</td><td>You send the PDF manually</td></tr>
+  </table>
+  <div class="box warn">
+    <span class="label">Important</span>
+    <p>Before you choose, check on the platform's website whether you can withdraw money in your country and how (PayPal, bank, Payoneer). This varies by country and changes over time.</p>
+  </div>
+
+  <h3 style="break-before: page; margin-top: 0">Step 4: The price</h3>
+  <p>Practical e-books usually sell well between <strong>$7 and $19</strong>. You can also offer two versions: "Basic" (just the e-book) and "Premium" (e-book + templates + a 20-minute consultation).</p>
+
+  <h3>Step 5: Promotion</h3>
+  <ol>
+    <li>Make 10 Reels with tips from the book. Each video gives one piece of value and ends with "more at the link in my bio".</li>
+    <li>Give away part of it for free (e.g. the first chapter) in exchange for an email address.</li>
+    <li>Launch offer: 50% off for the first 48 hours, which creates urgency.</li>
+    <li>Ask your first buyers for reviews and share them in your stories.</li>
+  </ol>
+</section>
+
+<!-- ============ 06 ============ -->
+<div class="chapter">
+  <div class="num">06</div>
+  <h2>Scams to avoid</h2>
+  <p class="lead">For every real opportunity there are ten scams. Learn the signs.</p>
+  <div class="bar"></div>
+</div>
+
+<section>
+  <table>
+    <tr><th>The scam</th><th>How to spot it</th></tr>
+    <tr><td>"Work from home, $100 a day, no experience needed"</td><td>Over-the-top promises, no clear job description.</td></tr>
+    <tr><td>Pay a "registration fee" or "training fee" to get the job</td><td>A real employer never asks you for money.</td></tr>
+    <tr><td>Pyramid schemes / "network" businesses</td><td>You earn by recruiting people, not by selling a real product.</td></tr>
+    <tr><td>Crypto or trading with "guaranteed profits"</td><td>Nobody can guarantee investment returns.</td></tr>
+    <tr><td>"Click ads / watch videos and earn"</td><td>Pays cents, or stops paying when you reach the withdrawal limit.</td></tr>
+    <tr><td>A client who "overpays" and asks you to refund the difference</td><td>The original payment gets reversed later.</td></tr>
+    <tr><td>Requests for passwords, SMS codes or ID documents up front</td><td>Identity or account theft.</td></tr>
+  </table>
+  <div class="box key">
+    <span class="label">The golden rule</span>
+    <p>If it sounds too good to be true, it isn't true. Work on well-known platforms, get paid through the platform, and never pay anything yourself to "get started".</p>
+  </div>
+</section>
+
+<!-- ============ 07 ============ -->
+<div class="chapter">
+  <div class="num">07</div>
+  <h2>The 30-day plan</h2>
+  <p class="lead">An hour and a half a day is enough to get started. Follow it step by step.</p>
+  <div class="bar"></div>
+</div>
+
+<section>
+  <div class="week">
+    <h3>Week 1: Choose and prepare</h3>
+    <ul>
+      <li>Pick 1 method from Chapter 2 and write down your goal: "By day 30 I want my first client / first sale."</li>
+      <li>Open your payment account (Payoneer, bank) and check how withdrawals work.</li>
+      <li>Set up your profiles: a professional Instagram + your chosen platform.</li>
+      <li>Learn your main tool (Canva, CapCut) with 2–3 free YouTube videos.</li>
+    </ul>
+  </div>
+  <div class="week">
+    <h3>Week 2: Portfolio and online presence</h3>
+    <ul>
+      <li>Create 3–5 work samples or a draft of your digital product.</li>
+      <li>Post 1 Reel a day about your topic.</li>
+      <li>List 30 potential clients (businesses, creators, parents abroad).</li>
+    </ul>
+  </div>
+  <div class="week">
+    <h3>Week 3: Outreach</h3>
+    <ul>
+      <li>Send 5–10 personalised messages a day (template in Chapter 3).</li>
+      <li>Apply to 5 jobs a day on your platform.</li>
+      <li>If you have a digital product, launch it with an opening offer.</li>
+    </ul>
+  </div>
+  <div class="week">
+    <h3>Week 4: First client and improvement</h3>
+    <ul>
+      <li>Do your first job brilliantly and ask for a review and a referral.</li>
+      <li>Look at the numbers: how many messages you sent, how many replied, which Reels did well.</li>
+      <li>Fix what didn't work and plan month two.</li>
+    </ul>
+  </div>
+
+  <h3>Checklist</h3>
+  <ul class="check">
+    <li>I've chosen one method and a 30-day goal</li>
+    <li>I have a working way to get paid</li>
+    <li>I have a professional profile and 3 work samples</li>
+    <li>I have a list of 30 potential clients</li>
+    <li>I post content every day</li>
+    <li>I track every payment and every hour worked</li>
+  </ul>
+</section>
+
+<section>
+  <div class="end">
+    <h2>Start today. Not on Monday.</h2>
+    <p>The difference between people who earn online and people who only dream about it isn't talent. It's that the first group started, made mistakes, learned and kept going.</p>
+    <p>Your first step is small: pick one method from this book and do one thing for it within the next 24 hours.</p>
+    <p style="margin-top:10mm; color: var(--accent); font-weight: 700;">Good luck! 💪</p>
+    <p class="small" style="margin-top:14mm">© Tinguj Shqip. All rights reserved. This e-book is for the purchaser's personal use only and may not be redistributed or resold without permission.</p>
+  </div>
+</section>
+
+</body>
+</html>

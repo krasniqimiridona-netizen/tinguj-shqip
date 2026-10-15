@@ -7,6 +7,9 @@ Udhëzues praktik (31 faqe, A5, PDF) me 12 mënyra reale për të fituar para on
 | `Fito_Online.pdf` | Libri gati për shitje |
 | `kopertina.png` | Kopertina për faqen e shitjes dhe për Instagram |
 | `fito-online.html` | Burimi: ndrysho tekstin këtu |
+| `Earn_Online.pdf` | Versioni në anglisht (31 faqe) |
+| `cover-en.png` | Kopertina e versionit anglisht |
+| `earn-online.html` | Burimi i versionit anglisht |
 
 ## Ta ndryshosh dhe ta rikrijosh PDF-në
 
