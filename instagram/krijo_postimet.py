@@ -235,11 +235,40 @@ def post_09():
                       "Kush ofron vlerë, fiton. Fillo me një aftësi që e ke sot.")
 
 
+def story_announce():
+    """Story 1080x1920 për llogarinë personale: njofton faqen e re."""
+    global H
+    old_h, H = H, 1920
+    try:
+        img = background(0.8, 0.08)
+    finally:
+        H = old_h
+    d = ImageDraw.Draw(img)
+    logo = Image.open(os.path.join(HERE, "logo-C-libri.png")).resize((300, 300), Image.LANCZOS)
+    mask = Image.new("L", (300, 300), 0)
+    ImageDraw.Draw(mask).ellipse((0, 0, 299, 299), fill=255)
+    img.paste(logo, ((1080 - 300) // 2, 300), mask)
+    d.text((540, 700), "HAPA FAQEN TIME TË RE", font=font("bold", 34), fill=ROSE, anchor="mm")
+    y = 770
+    for line, col in (("Mëso të fitosh", TEXT), ("para online.", TEXT), ("Pa mashtrime.", ROSE)):
+        d.text((540, y), line, font=font("black", 104), fill=col, anchor="ma")
+        y += 118
+    y += 40
+    for line in ("Këshilla të sinqerta çdo ditë", "për shqiptarët kudo në botë"):
+        d.text((540, y), line, font=font("med", 40), fill=MUTED, anchor="ma")
+        y += 56
+    d.rounded_rectangle((170, 1440, 910, 1550), radius=55, fill=ROSE)
+    d.text((540, 1495), "@fitoonline.shqip", font=font("xbold", 50), fill=NIGHT, anchor="mm")
+    d.text((540, 1600), "Ndiqe tani", font=font("semi", 36), fill=TEXT, anchor="ma")
+    return img
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     posts = [post_01, post_02, post_03, post_04, post_05, post_06, post_07, post_08, post_09]
     for i, fn in enumerate(posts, 1):
         fn().save(os.path.join(OUT, f"{i:02d}.png"))
+    story_announce().save(os.path.join(OUT, "story-faqja-e-re.png"))
     print("Gati:", OUT)
 
 
