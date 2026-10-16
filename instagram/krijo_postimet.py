@@ -61,7 +61,7 @@ def text_block(draw, xy, text, fnt, fill, width, spacing=1.18):
     return y
 
 
-def footer(img, label="Shqiponja Digital"):
+def footer(img, label="@fitoonline.shqip"):
     d = ImageDraw.Draw(img)
     logo = Image.open(os.path.join(HERE, "logo-C-libri.png")).resize((64, 64), Image.LANCZOS)
     mask = Image.new("L", (64, 64), 0)
